@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  cursor: pointer;
+}
+*::-webkit-scrollbar-track {
+  background-color: rgba(229, 231, 235, var(--bg-opacity));
+  cursor: pointer;
+  background: #f083bb;
+  border-radius: 13px;
+}
+*::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background-color: #a0aec0;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.2);
+  /* border-radius: 16px; */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+body {
+  @apply min-h-[96vh] h-full bg-gradient-to-r from-blue-500 via-pink-500 to-pink-500 bg-no-repeat object-contain relative;
+}
