@@ -1,5 +1,4 @@
-
-'use client'
+"use client";
 
 import PlusIcon from "../Icons/PlusIcon";
 import { ref, set, get } from "firebase/database";
@@ -88,6 +87,7 @@ function Dashboard() {
           ) : (
             <>
               <button
+                data-columnId="addColumn"
                 onClick={() => {
                   createNewColumn();
                 }}

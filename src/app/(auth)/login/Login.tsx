@@ -78,6 +78,7 @@ function Login() {
                         <input
                           type="email"
                           name="email"
+                          data-id="email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           className="group h-12 px-6 border-2 rounded-lg outline-none border-pink-400"
@@ -93,6 +94,7 @@ function Login() {
                         <input
                           type="password"
                           name="password"
+                          data-id="password"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           className="group h-12 px-6 border-2 rounded-lg outline-none border-pink-400"
@@ -101,6 +103,7 @@ function Login() {
                       </div>
                       <button
                         type="submit"
+                        data-id="loginbtn"
                         disabled={loading}
                         className={`flex items-center justify-center ${
                           loading ? "font-normal" : "font-semibold"

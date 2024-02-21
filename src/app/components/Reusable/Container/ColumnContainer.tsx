@@ -76,15 +76,17 @@ function ColumnContainer({
         onClick={() => {
           setEditMode(true);
         }}
-        className="bg-gray-200 text-md h-[60px] cursor-grab rounded-md rounded-b-none p-3 font-bold flex tems-center justify-between"
+        className="bg-gray-200 text-md h-[60px] cursor-grab rounded-md rounded-b-none p-3 font-bold flex items-center justify-between"
       >
-        <div className="flex gap-2 justify-center items-center">
-          <span className="bg-gray-50 flex justify-center items-center w-5 h-5 rounded-full text-xs">
-            {tasks.length}
-          </span>
+        <span className="bg-gray-50 flex justify-center items-center w-5 h-5 rounded-full text-xs">
+          {tasks.length}
+        </span>
+        <div
+          className="columns flex gap-2 justify-center items-center" data-title="columnTitle">
           {!editMode && column.title}
           {editMode && (
             <input
+              data-columnId="title"
               className="bg-white focus:border-rose-500 border rounded outline-none px-2 w-48"
               value={column.title}
               onChange={(e) => updateColumn(column.id, e.target.value)}
@@ -100,10 +102,11 @@ function ColumnContainer({
           )}
         </div>
         <button
+          data-columnId="deleteColumn"
           onClick={() => {
             deleteColumn(column.id);
           }}
-          className="stroke-white rounded px-2 py-2 bg-gray-300"
+          className="stroke-pink-600 rounded px-2 py-2 bg-rose-300"
         >
           <TrashIcon />
         </button>

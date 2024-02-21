@@ -20,13 +20,7 @@ export default function Home() {
   }, [router]);
 
   if (!user) {
-    return (
-      <>
-        <div className="h-screen flex justify-center items-center">
-          <ClipLoader size={60}/>
-        </div>
-      </>
-    );
+    return;
   }
 
   return <Dashboard />;
