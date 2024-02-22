@@ -13,23 +13,23 @@ describe("trello check", () => {
     // add first column
     cy.get('[data-columnId="addColumn"]').click();
     cy.wait(2000);
-    // // edit column
+    // edit column
     cy.get('div[data-title="columnTitle"]').click();
     cy.get('input[data-columnId="title"]')
       .clear()
       .type("Hamza Malik")
       .type("{enter}");
     cy.wait(2000);
-    // // add first task
+    // add first task
     cy.get('button[data-task="addTask"]').click();
     cy.wait(2000);
-    // // edit task
+    // edit task
     cy.get('input[data-task="taskTitle"]')
       .clear()
       .type("Xeverse.io")
       .type("{enter}");
     cy.wait(2000);
-    // // add second task
+    // add second task
     cy.get('button[data-task="addTask"]').click();
     cy.wait(2000);
     cy.get('input[data-task="taskTitle"]')
@@ -63,9 +63,22 @@ describe("trello check", () => {
       .find('div[data-columnContainer="columnContainer"]')
       .should("have.length", 2);
     cy.get('div[data-columns="columns"]')
-      .find('div[data-columnContainer="columnContainer"]').each(($column) => {
-        cy.log($column.text());
+      .find('div[data-columnContainer="columnContainer"]').each(($ele) => {
+        if($ele.text().includes("Ahsan Khan")){
+          cy.wrap($ele).find('button[data-task="addTask"]').click();
+          cy.get('input[data-task="taskTitle"]')
+            .clear()
+            .type("Ahsan Khan Task 01")
+            .type("{enter}");
+          cy.wait(2000);
+
+          cy.wrap($ele).find('button[data-task="addTask"]').click();
+          cy.get('input[data-task="taskTitle"]')
+            .clear()
+            .type("Ahsan Khan Task 02")
+            .type("{enter}");
+          cy.wait(2000);
+        }
       });
-    cy.wait(2000);
   });
 });
