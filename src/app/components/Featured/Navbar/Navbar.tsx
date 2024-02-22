@@ -36,6 +36,7 @@ function Navbar() {
         />
         {/* sign out button */}
         <button
+          data-btn="signout"
           onClick={handleSignOut}
           className="bg-white bg-opacity-40  py-3 px-5 text-sm font-bold text-white rounded "
         >

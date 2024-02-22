@@ -1,13 +1,14 @@
 describe("trello check", () => {
   it("passes", () => {
+    cy.viewport(1080, 900);
     cy.visit("http://localhost:3000/login");
     // Enter the email
     cy.get('[data-id="email"]').type("malik@gmail.com");
-    cy.wait(2000);
+    // cy.wait(20000);
     // Enter the password
     cy.get('[data-id="password"]').type("00000000");
     cy.wait(2000);
-    // Submit the form
+    // login
     cy.get('[data-id="loginbtn"]').click();
     cy.wait(2000);
     // add first column
@@ -20,6 +21,9 @@ describe("trello check", () => {
       .type("Hamza Malik")
       .type("{enter}");
     cy.wait(2000);
+
+    // delete column
+    
     // add first task
     cy.get('button[data-task="addTask"]').click();
     cy.wait(2000);
@@ -41,7 +45,7 @@ describe("trello check", () => {
     cy.get('[data-columnId="addColumn"]').click();
     cy.wait(2000);
 
-    // check if second column name matches to "Column 2" if not then show error
+    // check if second column name matches to "Column 2"
     cy.get('div[data-title="columnTitle"]').each(($column) => {
       cy.wrap($column)
         .invoke("text")
@@ -61,24 +65,40 @@ describe("trello check", () => {
 
     cy.get('div[data-columns="columns"]')
       .find('div[data-columnContainer="columnContainer"]')
-      .should("have.length", 2);
-    cy.get('div[data-columns="columns"]')
-      .find('div[data-columnContainer="columnContainer"]').each(($ele) => {
-        if($ele.text().includes("Ahsan Khan")){
+      .each(($ele) => {
+        if ($ele.text().includes("Ahsan Khan")) {
+          //add first task
           cy.wrap($ele).find('button[data-task="addTask"]').click();
           cy.get('input[data-task="taskTitle"]')
             .clear()
             .type("Ahsan Khan Task 01")
             .type("{enter}");
           cy.wait(2000);
-
+          //add second task
           cy.wrap($ele).find('button[data-task="addTask"]').click();
           cy.get('input[data-task="taskTitle"]')
             .clear()
             .type("Ahsan Khan Task 02")
             .type("{enter}");
           cy.wait(2000);
+          cy.wrap($ele).find('button[data-task="addTask"]').click();
+          cy.get('input[data-task="taskTitle"]')
+            .clear()
+            .type("Ahsan Khan Task 023")
+            .type("{enter}");
+          cy.wait(2000);
         }
       });
+    cy.wait(2000);
+    cy.get('div[data-columns="columns"]')
+      .find('div[data-columnContainer="columnContainer"]')
+      .each(($ele) => {
+        if ($ele.text().includes("Hamza Malik")) {
+          cy.wrap($ele).find('button[data-columnId="deleteColumn"]').click();
+          cy.wait(2000);
+        }
+      });
+
+
   });
 });

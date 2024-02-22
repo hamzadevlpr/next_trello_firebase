@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TrashIcon from "../../Icons/TrashIcon";
+import TrashIcon from "../../../Icons/TrashIcon";
 import { Id, Task } from "@/app/types/types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -60,7 +60,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
         {...listeners}
         className="bg-gray-200 p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-rose-500 cursor-grab relative"
       >
-        <textarea
+        <input
           className="
         h-[90%]
         w-full resize-none border-none rounded bg-transparent text-gray-700 focus:outline-none
@@ -101,6 +101,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
 
       {mouseIsOver && (
         <button
+          data-task="deleteTask"
           onClick={() => {
             deleteTask(task.id);
           }}
