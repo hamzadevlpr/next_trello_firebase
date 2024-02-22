@@ -11,7 +11,6 @@ interface Props {
 }
 
 function TaskCard({ task, deleteTask, updateTask }: Props) {
-  const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(true);
 
   const {
@@ -37,7 +36,6 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
 
   const toggleEditMode = () => {
     setEditMode((prev) => !prev);
-    setMouseIsOver(false);
   };
 
   if (isDragging) {
@@ -46,37 +44,8 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
         ref={setNodeRef}
         style={style}
         className="
-        opacity-30 lass-effect p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl border-2 border-rose-500  cursor-grab relative"
+        opacity-30 glass-effect p-2.5 h-[50px] min-h-[50px] items-center flex text-left rounded-xl border-2 border-rose-500  cursor-grab relative"
       />
-    );
-  }
-
-  if (editMode) {
-    return (
-      <div
-        ref={setNodeRef}
-        style={style}
-        {...attributes}
-        {...listeners}
-        className="bg-gray-200 p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-rose-500 cursor-grab relative"
-      >
-        <textarea
-          className="
-        h-[90%]
-        w-full resize-none border-none rounded bg-transparent text-gray-700 focus:outline-none
-        "
-          value={task.content}
-          autoFocus
-          placeholder="Task content here"
-          onBlur={toggleEditMode}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && e.shiftKey) {
-              toggleEditMode();
-            }
-          }}
-          onChange={(e) => updateTask(task.id, e.target.value)}
-        />
-      </div>
     );
   }
 
@@ -87,19 +56,32 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       {...attributes}
       {...listeners}
       onClick={toggleEditMode}
-      className="bg-gray-200 p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-rose-500 cursor-grab relative task"
-      onMouseEnter={() => {
-        setMouseIsOver(true);
-      }}
-      onMouseLeave={() => {
-        setMouseIsOver(false);
-      }}
+      data-taskContainer="taskContainer"
+      className="bg-gray-200 p-2.5 h-[50px] min-h-[50px] items-center flex text-left rounded-xl cursor-grab relative task"
     >
-      <p className="my-auto font-medium  h-[90%] w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
-        {task.content}
-      </p>
+      {editMode ? (
+        <input
+          data-task="taskTitle"
+          className="h-[90%] w-full resize-none border-none rounded bg-transparent text-gray-700 focus:outline-none"
+          value={task.content}
+          autoFocus
+          placeholder="Task content here"
+          onBlur={toggleEditMode}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              toggleEditMode();
+              setEditMode(false);
+            }
+          }}
+          onChange={(e) => updateTask(task.id, e.target.value)}
+        />
+      ) : (
+        <p className="my-auto font-medium  h-[90%] w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
+          {task.content}
+        </p>
+      )}
 
-      {mouseIsOver && (
+      {!editMode && (
         <button
           onClick={() => {
             deleteTask(task.id);

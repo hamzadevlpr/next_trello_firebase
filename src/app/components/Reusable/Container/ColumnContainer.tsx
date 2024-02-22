@@ -67,7 +67,8 @@ function ColumnContainer({
     <div
       ref={setNodeRef}
       style={style}
-      className="ring-pink-500 hover:ring-2 glass-effect w-[300px] h-[500px] max-h-[400px] rounded-md  flex  flex-col"
+      data-columnContainer="columnContainer"
+      className="ring-pink-500 hover:ring-2 glass-effect w-[300px] h-[500px] max-h-[400px] rounded-md flex flex-col"
     >
       {/* Column title */}
       <div
@@ -82,7 +83,9 @@ function ColumnContainer({
           {tasks.length}
         </span>
         <div
-          className="columns flex gap-2 justify-center items-center" data-title="columnTitle">
+          className="columns flex gap-2 justify-center items-center"
+          data-title="columnTitle"
+        >
           {!editMode && column.title}
           {editMode && (
             <input
@@ -127,6 +130,7 @@ function ColumnContainer({
       </div>
       {/* Column footer */}
       <button
+        data-task="addTask"
         className="h-[40px] w-[300px] min-w-[300px] cursor-pointer rounded-b-lg glass-effect p-2 justify-center ring-pink-500 hover:ring-2 flex gap-2"
         onClick={() => {
           createTask(column.id);

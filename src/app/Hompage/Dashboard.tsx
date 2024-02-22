@@ -79,7 +79,10 @@ function Dashboard() {
       <div className="glass-effect flex flex-col m-10 rounded-xl">
         <Navbar />
 
-        <div className=" m-3 min-h-[65vh] flex justify-center items-center overflow-x-auto pb-3 flex-col">
+        <div
+          className=" m-3 min-h-[65vh] flex justify-center items-center overflow-x-auto pb-3 flex-col"
+          data-scroll="scrollColumns"
+        >
           {loading ? (
             <div className="flex h-[45vh] justify-center items-center">
               <ClipLoader size={80} color="#ee2b91" />
@@ -103,7 +106,7 @@ function Dashboard() {
                 onDragOver={onDragOver}
               >
                 <div className="m-auto flex gap-4">
-                  <div className="flex gap-4">
+                  <div className="flex gap-4" data-columns="columns">
                     <SortableContext items={columnsId}>
                       {columns.map((col) => (
                         <ColumnContainer
