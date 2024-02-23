@@ -22,8 +22,6 @@ describe("trello check", () => {
       .type("{enter}");
     cy.wait(2000);
 
-    // delete column
-    
     // add first task
     cy.get('button[data-task="addTask"]').click();
     cy.wait(2000);
@@ -81,24 +79,32 @@ describe("trello check", () => {
             .type("Ahsan Khan Task 02")
             .type("{enter}");
           cy.wait(2000);
-          cy.wrap($ele).find('button[data-task="addTask"]').click();
-          cy.get('input[data-task="taskTitle"]')
-            .clear()
-            .type("Ahsan Khan Task 023")
-            .type("{enter}");
-          cy.wait(2000);
         }
       });
-    cy.wait(2000);
+    // deleting columns
+    // cy.get('div[data-columns="columns"]')
+    //   .find('div[data-columnContainer="columnContainer"]')
+    //   .each(($ele) => {
+    //     if ($ele.text().includes("Ahsan Khan")) {
+    //       cy.wrap($ele).find('button[data-columnId="deleteColumn"]').click();
+    //       cy.wait(2000);
+    //     }
+    //   });
+
+    // deleting tasks
     cy.get('div[data-columns="columns"]')
       .find('div[data-columnContainer="columnContainer"]')
-      .each(($ele) => {
-        if ($ele.text().includes("Hamza Malik")) {
-          cy.wrap($ele).find('button[data-columnId="deleteColumn"]').click();
+      .each(($column) => {
+        if ($column.text().includes("Hamza Malik")) {
+          cy.wrap($column)
+            .find('p[data-task="taskTitle"]')
+            .contains("New Task 01")
+            .parent()
+            .find('button[data-taskDelete="taskDelete"]')
+            .click();
           cy.wait(2000);
         }
       });
-
 
   });
 });

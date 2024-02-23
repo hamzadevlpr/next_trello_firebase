@@ -43,8 +43,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       <div
         ref={setNodeRef}
         style={style}
-        className="
-        opacity-30 glass-effect p-2.5 h-[50px] min-h-[50px] items-center flex text-left rounded-xl border-2 border-rose-500  cursor-grab relative"
+        className="opacity-30 glass-effect p-2.5 h-[50px] min-h-[50px] items-center flex text-left rounded-xl border-2 border-rose-500  cursor-grab relative"
       />
     );
   }
@@ -56,7 +55,6 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       {...attributes}
       {...listeners}
       onClick={toggleEditMode}
-      data-taskContainer="taskContainer"
       className="bg-gray-200 p-2.5 h-[50px] min-h-[50px] items-center flex text-left rounded-xl cursor-grab relative task"
     >
       {editMode ? (
@@ -76,13 +74,14 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
           onChange={(e) => updateTask(task.id, e.target.value)}
         />
       ) : (
-        <p className="my-auto font-medium  h-[90%] w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
+        <p data-task="taskTitle" className="my-auto font-medium  h-[90%] w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
           {task.content}
         </p>
       )}
 
       {!editMode && (
         <button
+          data-taskDelete="taskDelete"
           onClick={() => {
             deleteTask(task.id);
           }}
