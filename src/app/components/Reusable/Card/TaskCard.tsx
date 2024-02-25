@@ -83,6 +83,12 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
         contentEditable={editMode}
         suppressContentEditableWarning={true}
         onClick={handleEditClick}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            handleSaveEditClick();
+          }
+        }}
       >
         {task.content}
       </p>
