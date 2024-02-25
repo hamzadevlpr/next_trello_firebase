@@ -90,7 +90,7 @@ function Dashboard() {
           ) : (
             <>
               <button
-                data-columnId="addColumn"
+                button-click="add-column"
                 onClick={() => {
                   createNewColumn();
                 }}
