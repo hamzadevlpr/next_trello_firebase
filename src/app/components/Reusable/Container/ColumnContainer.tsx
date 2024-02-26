@@ -89,7 +89,7 @@ function ColumnContainer({
           {!editMode && column.title}
           {editMode && (
             <input
-              data-columnId="title"
+              title="columnTitle"
               className="bg-white focus:border-rose-500 border rounded outline-none px-2 w-48"
               value={column.title}
               onChange={(e) => updateColumn(column.id, e.target.value)}
@@ -105,7 +105,7 @@ function ColumnContainer({
           )}
         </div>
         <button
-          data-columnId="deleteColumn"
+          title="deleteColumn"
           onClick={() => {
             deleteColumn(column.id);
           }}
@@ -116,7 +116,7 @@ function ColumnContainer({
       </div>
 
       {/* Column task container */}
-      <div data-task="taskContainer" className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
+      <div data-task="taskContainer" className="flex flex-grow flex-col border gap-4 p-2 overflow-x-hidden overflow-y-auto">
         <SortableContext items={tasksIds}>
           {tasks.map((task) => (
             <TaskCard
@@ -130,7 +130,7 @@ function ColumnContainer({
       </div>
       {/* Column footer */}
       <button
-        data-task="addTask"
+        btn-task="addTask"
         className="h-[40px] w-[300px] min-w-[300px] cursor-pointer rounded-b-lg glass-effect p-2 justify-center ring-pink-500 hover:ring-2 flex gap-2"
         onClick={() => {
           createTask(column.id);

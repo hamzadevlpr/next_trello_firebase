@@ -3,7 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Dashboard from "@/app/Hompage/Dashboard";
-import { ClipLoader } from "react-spinners";
+// import DND from "@/app/Hompage/DND";
+// import { ClipLoader } from "react-spinners";
 
 export default function Home() {
   const [user, setUser] = useState<string | null>(null);

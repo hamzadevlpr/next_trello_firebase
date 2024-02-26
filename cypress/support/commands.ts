@@ -35,3 +35,17 @@
 //     }
 //   }
 // }
+
+declare namespace Cypress {
+    interface Chainable<Subject> {
+        dragTo(targetEl: string): Chainable<Subject>;
+    }
+}
+
+require('@4tw/cypress-drag-drop');
+
+Cypress.Commands.add("dragTo", { prevSubject: "element" }, (subject: any, targetEl: any) => {
+    const dataTransfer = new DataTransfer();
+    cy.get(subject).trigger('dragstart', { dataTransfer });
+    cy.get(targetEl).trigger('drop', { dataTransfer });
+})

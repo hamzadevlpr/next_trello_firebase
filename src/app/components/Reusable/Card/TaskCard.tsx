@@ -70,6 +70,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       {...attributes}
       {...listeners}
       onClick={handleEditClick}
+      handle-task="handleTask"
       className={`${isDragging
         ? "opacity-30 glass-effect"
         : "bg-gray-200"
@@ -96,7 +97,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
         {editMode ? (
           <>
             <button
-              title="Save Edit"
+              title="Save Task"
               onClick={(e) => {
                 e.stopPropagation();
                 handleSaveEditClick();
@@ -105,7 +106,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
               <CheckIcon />
             </button>
             <button
-              title="Cancel Edit"
+              title="Cancel Task"
               onClick={(e) => {
                 e.stopPropagation();
                 handleCancelEditClick();
