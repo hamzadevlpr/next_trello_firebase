@@ -3,13 +3,13 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBEnIJlSv1BLPuGfQhOVrspTxQbmAgC87s",
-  authDomain: "trello-new-clone.firebaseapp.com",
-  databaseURL: "https://trello-new-clone-default-rtdb.firebaseio.com",
-  projectId: "trello-new-clone",
-  storageBucket: "trello-new-clone.appspot.com",
-  messagingSenderId: "598929690555",
-  appId: "1:598929690555:web:c7f5d5fc8cd238a59f3e9e",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
