@@ -68,7 +68,7 @@ function Login() {
                     Log in to unlock the best of Trello Magic App.
                   </h2>
                 </div>
-                <div className="mt-10 grid space-y-4 px-5">
+                <div className="mt-10 space-y-4 px-5">
                   <form onSubmit={handleLogin}>
                     <div className="flex flex-col gap-4">
                       <div className="flex flex-col gap-1">
@@ -124,23 +124,33 @@ function Login() {
                     <hr className="w-full border-t-2 border-gray-300" />
                   </div>
 
-                  <button
-                    onClick={handleGoogleSignIn}
-                    className="group h-12 px-6 border rounded-lg"
-                  >
-                    <div className="relative flex items-center space-x-4 justify-center">
+                  <div className="flex w-full gap-4">
+                    <button
+                      onClick={handleGoogleSignIn}
+                      className="group h-12 px-6 border rounded-lg"
+                    >
                       <Image
                         src="https://www.svgrepo.com/show/475656/google-color.svg"
-                        className="absolute left-0 w-5"
+                        className="w-8"
                         alt="google logo"
                         width={20}
                         height={20}
                       />
-                      <span className="block w-max font-semibold tracking-wide text-gray-50 text-sm">
-                        Continue with Google
-                      </span>
-                    </div>
-                  </button>
+                    </button>
+
+                    <button
+                      onClick={handleGoogleSignIn}
+                      className="group h-12 px-6 border rounded-lg"
+                    >
+                      <Image
+                        src="https://www.svgrepo.com/show/452196/facebook-1.svg"
+                        className="w-8"
+                        alt="facebook logo"
+                        width={20}
+                        height={20}
+                      />
+                    </button>
+                  </div>
 
                   <div className="flex items-center gap-1 text-sm">
                     <span className="text-gray-900 text-center">
