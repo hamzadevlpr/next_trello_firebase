@@ -127,11 +127,11 @@ function Login() {
                   <div className="flex w-full gap-4">
                     <button
                       onClick={handleGoogleSignIn}
-                      className="group h-12 px-6 border rounded-lg"
+                      className="bg-gray-50 group h-12 px-6 flex  items-center justify-center border rounded-lg w-1/2"
                     >
                       <Image
                         src="https://www.svgrepo.com/show/475656/google-color.svg"
-                        className="w-8"
+                        className="w-6"
                         alt="google logo"
                         width={20}
                         height={20}
@@ -140,7 +140,7 @@ function Login() {
 
                     <button
                       onClick={handleGoogleSignIn}
-                      className="group h-12 px-6 border rounded-lg"
+                      className="bg-gray-50 group h-12 px-6 flex  items-center justify-center border rounded-lg w-1/2"
                     >
                       <Image
                         src="https://www.svgrepo.com/show/452196/facebook-1.svg"
