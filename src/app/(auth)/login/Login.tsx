@@ -2,13 +2,15 @@
 
 import React from "react";
 import toast from "react-hot-toast";
-import { auth, provider } from "@/app/(auth)/Firebase/firebase";
+import { auth, fbProvider, provider } from "@/app/(auth)/Firebase/firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useRouter } from "next/navigation";
-import logo from "@/app/assets/logo.png";
+import logo from "../../assets/logo.png";
 import Image from "next/image";
+import Container from "@/app/components/Reusable/Container";
+import Link from "next/link";
 
 function Login() {
   const router = useRouter();
@@ -20,6 +22,20 @@ function Login() {
     try {
       // Sign in with Google
       const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      toast.success(`Welcome back ${user.displayName}!`);
+      localStorage.setItem("user", JSON.stringify(user));
+      router.push("/");
+    } catch (err: any) {
+      if (err.response) {
+        console.log(`Error: ${err.message}`);
+      }
+    }
+  };
+  const handleFBSignIn = async () => {
+    try {
+      // Sign in with facebook
+      const result = await signInWithPopup(auth, fbProvider);
       const user = result.user;
       toast.success(`Welcome back ${user.displayName}!`);
       localStorage.setItem("user", JSON.stringify(user));
@@ -50,7 +66,7 @@ function Login() {
   };
   return (
     <div className="h-screen flex justify-center items-center">
-      <div className="fixed grid place-items-center backdrop-blur-sm top-0 right-0 left-0 z-50 w-full inset-0 h-modal h-full justify-center items-center">
+      <Container>
         <div className="relative container m-auto px-6">
           <div className="m-auto md:w-[30rem]">
             <div className="rounded-xl glass-effect shadow-xl">
@@ -85,12 +101,19 @@ function Login() {
                         />
                       </div>
                       <div className="flex flex-col gap-1">
-                        <label
-                          htmlFor="password"
-                          className="text-sm font-medium"
-                        >
-                          Passsword
-                        </label>
+                        <div className="flex justify-between">
+                          <label
+                            htmlFor="password"
+                            className="text-sm font-medium"
+                          >
+                            Passsword
+                          </label>
+                          <Link href="/reset-password"
+                            className="text-sm font-medium underline hover:text-pink-800"
+                          >
+                            Forget Password?
+                          </Link>
+                        </div>
                         <input
                           type="password"
                           name="password"
@@ -105,9 +128,8 @@ function Login() {
                         type="submit"
                         data-id="loginbtn"
                         disabled={loading}
-                        className={`flex items-center justify-center ${
-                          loading ? "font-normal" : "font-semibold"
-                        } text-cyan-900 tracking-wide h-12 px-6 border rounded-lg hover:bg-pink-400 hover:text-white transition-all ease-in-out duration-300 hover:border`}
+                        className={`flex items-center justify-center ${loading ? "font-normal" : "font-semibold"
+                          } text-cyan-900 tracking-wide h-12 px-6 border rounded-lg hover:bg-pink-400 hover:text-white transition-all ease-in-out duration-300 hover:border`}
                       >
                         {loading ? (
                           <ClipLoader size={18} color="#ee2b91" />
@@ -124,10 +146,10 @@ function Login() {
                     <hr className="w-full border-t-2 border-gray-300" />
                   </div>
 
-                  <div className="flex w-full gap-4">
+                  <div className="flex flex-col w-full gap-4">
                     <button
                       onClick={handleGoogleSignIn}
-                      className="bg-gray-50 group h-12 px-6 flex  items-center justify-center border rounded-lg w-1/2"
+                      className="group h-12 px-6 flex  items-center justify-between border rounded-lg w-full text-gray-50 gap-2 text-sm"
                     >
                       <Image
                         src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -135,12 +157,13 @@ function Login() {
                         alt="google logo"
                         width={20}
                         height={20}
-                      />
+                      /> Continue with Google
+                      <div></div>
                     </button>
 
                     <button
-                      onClick={handleGoogleSignIn}
-                      className="bg-gray-50 group h-12 px-6 flex  items-center justify-center border rounded-lg w-1/2"
+                      onClick={handleFBSignIn}
+                      className="group h-12 px-6 flex  items-center justify-between border rounded-lg w-full text-gray-50 gap-2 text-sm"
                     >
                       <Image
                         src="https://www.svgrepo.com/show/452196/facebook-1.svg"
@@ -148,7 +171,8 @@ function Login() {
                         alt="facebook logo"
                         width={20}
                         height={20}
-                      />
+                      /> Continue with Facebook
+                      <div></div>
                     </button>
                   </div>
 
@@ -171,7 +195,7 @@ function Login() {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

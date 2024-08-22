@@ -1,12 +1,14 @@
 "use client"
 import toast from "react-hot-toast";
-import { auth } from "@/app/(auth)/Firebase/firebase";
+import { auth, dbFirestore } from "@/app/(auth)/Firebase/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import React ,{ useState } from "react";
+import React, { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import logo from "@/app/assets/logo.png";
+import Container from "@/app/components/Reusable/Container";
+import { addDoc, collection } from "firebase/firestore";
 
 function Signup() {
   const router = useRouter();
@@ -26,6 +28,12 @@ function Signup() {
         email,
         password
       );
+      const docRef = await addDoc(collection(dbFirestore, "users"), {
+        uid: result.user.uid,
+        email: result.user.email,
+        password: password,
+        createdAt: new Date(),
+      });
       const user = result.user;
       toast.success(`Welcome back ${user?.displayName || user?.email} !`);
       localStorage.setItem("user", JSON.stringify(user));
@@ -38,7 +46,7 @@ function Signup() {
   };
   return (
     <div className="h-screen flex justify-center items-center">
-      <div className="fixed grid place-items-center backdrop-blur-sm top-0 right-0 left-0 z-50 w-full inset-0 h-modal h-full justify-center items-center">
+      <Container>
         <div className="relative container m-auto px-6">
           <div className="m-auto md:w-[30rem]">
             <div className="rounded-xl glass-effect shadow-xl">
@@ -53,7 +61,7 @@ function Signup() {
                     alt="logo"
                   />
                   <h2 className="mb-8 text-3xl text-cyan-900  font-bold">
-                    Log in to unlock the best of Trello Magic App.
+                    Sign up here to get started with us 🚀 
                   </h2>
                 </div>
                 <div className="mt-10 grid space-y-4 px-5">
@@ -89,9 +97,8 @@ function Signup() {
                       <button
                         type="submit"
                         disabled={loading}
-                        className={`flex items-center justify-center ${
-                          loading ? "font-normal" : "font-semibold"
-                        } text-cyan-900 tracking-wide h-12 px-6 border rounded-lg hover:bg-pink-400 hover:text-white transition-all ease-in-out duration-300 hover:border`}
+                        className={`flex items-center justify-center ${loading ? "font-normal" : "font-semibold"
+                          } text-cyan-900 tracking-wide h-12 px-6 border rounded-lg hover:bg-pink-400 hover:text-white transition-all ease-in-out duration-300 hover:border`}
                       >
                         {loading ? (
                           <ClipLoader size={18} color="#ee2b91" />
@@ -119,7 +126,7 @@ function Signup() {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

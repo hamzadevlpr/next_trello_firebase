@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "Task Manager | Your Ultimate Trello Clone",
+    default: "Task Manager | Your Ultimate Trello Clone | Project Management",
     template: "%s | Task Manager",
   },
   description:
