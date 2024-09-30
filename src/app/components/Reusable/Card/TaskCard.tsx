@@ -1,4 +1,4 @@
-import { useState, useRef, MutableRefObject } from "react";
+import { useState, useRef } from "react";
 import { Id, Task } from "@/app/types/types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -15,8 +15,8 @@ interface Props {
 
 function TaskCard({ task, deleteTask, updateTask }: Props) {
   const [editMode, setEditMode] = useState(false);
-  const [originalContent, setOriginalContent] = useState(task.content);
-  const pRef = useRef<HTMLParagraphElement>(null);
+  const [taskContent, setTaskContent] = useState(task.content); // Store task content in state
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const {
     setNodeRef,
@@ -31,7 +31,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       type: "Task",
       task,
     },
-    disabled: editMode,
+    disabled: editMode, // Disable drag when in edit mode
   });
 
   const style = {
@@ -42,24 +42,21 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
   const handleEditClick = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).closest('[title="Edit Task"]')) {
       setEditMode(true);
-      setOriginalContent(pRef.current?.textContent || "");
-      pRef.current?.focus();
+      setTimeout(() => inputRef.current?.focus(), 0); // Focus the input after rendering
     }
   };
 
-
   const handleCancelEditClick = () => {
     setEditMode(false);
-    pRef.current && (pRef.current.textContent = originalContent);
+    setTaskContent(task.content); // Reset to original task content
   };
 
   const handleSaveEditClick = () => {
-    const newTaskName = pRef.current?.textContent ?? "";
-    if (newTaskName !== undefined && newTaskName !== "") {
+    if (taskContent.trim() !== "") {
       setEditMode(false);
-      updateTask(task.id, newTaskName);
+      updateTask(task.id, taskContent); // Save the updated task content
     } else {
-      console.log("Task name cannot be empty");
+      console.log("Task content cannot be empty");
     }
   };
 
@@ -69,35 +66,39 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       style={style}
       {...attributes}
       {...listeners}
-      onClick={handleEditClick}
-      handle-task="handleTask"
-      className={`${isDragging
-        ? "opacity-30 glass-effect"
-        : "bg-gray-200"
+      className={`${isDragging ? "opacity-30 glass-effect" : "bg-gray-200"
         } p-2.5 h-[50px] min-h-[50px] items-center flex justify-between text-left rounded-xl cursor-grab relative task`}
     >
-      <p
-        ref={pRef}
-        className={`${editMode ? "cursor-text" : ""
-          } w-52 rounded-md my-1 py-1 px-2 text-gray-900 border-0 outline-none placeholder:text-gray-400 sm:text-sm sm:leading-6 text-left ${editMode ? "ring-1 ring-inset ring-gray-700" : ""
-          }`}
-        contentEditable={editMode}
-        suppressContentEditableWarning={true}
-        onClick={handleEditClick}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            handleSaveEditClick();
-          }
-        }}
-      >
-        {task.content}
-      </p>
+      {editMode ? (
+        <input
+          ref={inputRef}
+          type="text"
+          data-id="taskLabel"
+          className="w-52 rounded-md my-1 py-1 px-2 text-gray-900 border-0 outline-none placeholder:text-gray-400 sm:text-sm sm:leading-6 text-left ring-1 ring-inset ring-gray-700"
+          value={taskContent}
+          onChange={(e) => setTaskContent(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleSaveEditClick(); 
+            }
+          }}
+          onBlur={handleSaveEditClick} 
+          autoFocus
+        />
+      ) : (
+        <span
+          className="w-52 rounded-md my-1 py-1 px-2 text-gray-900 border-0 outline-none sm:text-sm sm:leading-6 text-left cursor-pointer"
+          onClick={handleEditClick}
+        >
+          {task.content}
+        </span>
+      )}
       <div className="flex justify-center items-center gap-2">
         {editMode ? (
           <>
             <button
-              title="Save Task"
+              title="SaveTask"
               onClick={(e) => {
                 e.stopPropagation();
                 handleSaveEditClick();
@@ -121,18 +122,15 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
               <EditIcon />
             </button>
             <button
-              title="Delete Task"
-              data-taskDelete="taskDelete"
-              onClick={() => {
-                deleteTask(task.id);
-              }}
+              title="DeleteTask"
+              onClick={() => deleteTask(task.id)}
             >
               <TrashIcon />
             </button>
           </>
         )}
       </div>
-    </div >
+    </div>
   );
 }
 
